@@ -1,0 +1,70 @@
+#include<iostream>
+using namespace std;
+
+class Stack {
+private:
+    int top;
+    int capacity;
+    float* array;
+
+public:
+    Stack(int capacity);
+    ~Stack();
+
+    bool isFull() const;
+    bool isEmpty() const;
+
+    void push(float data);
+    float pop();
+    float peek() const;
+};
+
+Stack::Stack(int capacity) : top(-1), capacity(capacity) {
+    array = new float[capacity];
+}
+
+Stack::~Stack() {
+    delete[] array;
+}
+
+bool Stack::isFull() const {
+    return top == capacity - 1;
+}
+
+bool Stack::isEmpty() const {
+    return top == -1;
+}
+
+void Stack::push(float data) {
+    if (isFull()) {
+        throw "Stack is full.";
+    }
+    array[++top] = data;
+}
+
+float Stack::pop() {
+    if (isEmpty()) {
+        throw "Stack is empty.";
+    }
+    return array[top--];
+}
+
+float Stack::peek() const {
+    if (isEmpty()) {
+        throw "Stack is empty.";
+    }
+    return array[top];
+}
+
+int main() {
+    Stack stack(5);
+    stack.push(1.1);
+    stack.push(2.2);
+    stack.push(3.3);
+
+    cout << "Top element: " << stack.peek() << endl;
+    cout << "Popped element: " << stack.pop() << endl;
+    cout << "Top element: " << stack.peek() << endl;
+
+    return 0;
+}
